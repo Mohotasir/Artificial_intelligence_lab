@@ -1,0 +1,347 @@
+% ---------- USERS ----------
+% user(Name, [Skills], Experience, PreferredLocation, [InterestFields], [BlacklistedCompanies]).
+user(mamun, [python, java, git], 3, dhaka, [software, ml], []).
+user(sadia, [html, css, javascript], 1, chittagong, [web, design], [facebook]).
+user(rahim, [nodejs, database, git], 2, rajshahi, [backend], []).
+user(tamim, [python, excel, statistics], 1, dhaka, [data, finance], []).
+user(nahid, [python, flask, git], 2, dhaka, [web, ml], [linkedin]).
+user(jui, [html, css, react,django,angular], 1, sylhet, [frontend, design,web], [instagram]).
+user(tonmoy, [java, spring, database], 3, rajshahi, [software, backend], []).
+user(fahim, [python, keras, pandas], 2, chittagong, [ml, ai], []).
+user(lamia, [excel, accounting, finance], 4, dhaka, [finance, data], [facebook]).
+user(shanto, [javascript, nodejs, mongodb], 2, khulna, [web, backend], [github]).
+user(asma, [python, tableau, statistics], 3, barisal, [data, analytics], []).
+user(tasnia, [java, html, css], 1, dhaka, [web, design], []).
+user(emon, [c, 'c++', problem_solving], 1, dhaka, [cp, software], []).
+user(arif, [python, opencv, ml], 2, rajshahi, [vision, robotics], [linkedin]).
+
+
+
+% ---------- JOBS ----------
+
+% job(ID, Title, [RequiredSkills], MinExperience, Location, Field, Company, Salary).
+job(1, 'Software Engineer', [python, java, git], 2, dhaka, software, google, 60000).
+job(2, 'Web Developer', [html, css, javascript], 1, chittagong, web, facebook, 40000).
+job(3, 'Data Analyst', [python, statistics, excel], 2, dhaka, data, amazon, 55000).
+job(4, 'ML Engineer', [python, ml, git], 3, rajshahi, ml, google, 70000).
+job(5, 'Backend Developer', [nodejs, database, git], 2, dhaka, backend, turing, 50000).
+job(6, 'Junior Designer', [creativity, photoshop], 0, khulna, design, canva, 35000).
+job(7, 'Intern - Data Entry', [typing], 0, dhaka, admin, randomcorp, 15000).
+job(8, 'Frontend Developer', [html, css, react], 1, sylhet, web, facebook, 42000).
+job(9, 'Software Developer', [java, spring, database], 2, rajshahi, software, google, 60000).
+job(10, 'AI Researcher', [python, tensorflow, ml], 3, dhaka, ml, openai, 75000).
+job(11, 'Data Scientist', [python, pandas, statistics], 2, dhaka, data, amazon, 65000).
+job(12, 'Product Manager', [communication, management, roadmap], 4, chittagong, management, turing, 80000).
+job(13, 'DevOps Engineer', [docker, kubernetes, git], 3, khulna, devops, github, 70000).
+job(14, 'UX Designer', [figma, design_thinking, creativity], 2, sylhet, design, canva, 48000).
+job(15, 'Cybersecurity Analyst', [networking, security, linux], 3, dhaka, security, cisco, 72000).
+job(16, 'Marketing Executive', [seo, branding, communication], 1, dhaka, marketing, unilever, 40000).
+job(17, 'Finance Analyst', [excel, finance, statistics], 2, barisal, finance, hsbc, 55000).
+job(18, 'Mobile App Developer', [flutter, dart, firebase], 1, rajshahi, mobile, turing, 47000).
+job(19, 'Cloud Engineer', [aws, devops, linux], 2, chittagong, cloud, amazon, 75000).
+job(20, 'Content Writer', [writing, seo], 0, dhaka, content, randomcorp, 30000).
+job(21, 'QA Tester', [testing, selenium, java], 1, khulna, quality, microsoft, 45000).
+job(22, 'Game Developer', [unity, 'c#', graphics], 2, dhaka, game, ubisoft, 60000).
+job(23, 'Network Engineer', [networking, cisco, linux], 2, rajshahi, network, cisco, 58000).
+job(24, 'Full Stack Developer', [nodejs, react, database], 2, dhaka, fullstack, google, 65000).
+job(25, 'Junior Accountant', [excel, tally], 0, barisal, finance, bracbank, 32000).
+job(26, 'Robotics Engineer', [python, arduino, electronics], 3, sylhet, robotics, boston_dynamics, 72000).
+job(27, 'E-commerce Manager', [seo, ads, wordpress], 2, chittagong, ecommerce, daraz, 50000).
+job(28, 'Intern - IT Support', [hardware, troubleshooting], 0, dhaka, support, grameenphone, 18000).
+job(29, 'Research Assistant', [writing, data, ml], 1, rajshahi, research, buet, 35000).
+job(30, 'System Admin', [linux, server, security], 2, dhaka, admin, robishop, 50000).
+job(31, 'Technical Writer', [writing, technical_docs, tools], 1, khulna, content, redhat, 40000).
+job(32, 'HR Executive', [communication, hr, tools], 1, dhaka, hr, unilever, 45000).
+job(33, 'Video Editor', [editing, premiere_pro], 0, barisal, media, youtube, 30000).
+job(34, 'Logistics Coordinator', [scheduling, excel], 1, chittagong, logistics, pathao, 35000).
+job(35, 'Support Engineer', [communication, hardware], 1, dhaka, support, samsung, 40000).
+job(36, 'Junior Web Developer', [html, css], 0, sylhet, web, startuphub, 25000).
+job(37, 'AI Engineer', [python, pytorch, ml], 2, rajshahi, ml, openai, 70000).
+
+% ----------- USER JOB PREFERENCES -----------
+preference(mamun, remote).
+preference(mamun, flexible_hours).
+preference(sadia, hybrid).
+preference(rahim, onsite).
+preference(tamim, remote).
+preference(nahid, hybrid).
+preference(jui, flexible_hours).
+preference(jui, remote).
+preference(tonmoy, onsite).
+preference(fahim, remote).
+preference(lamia, remote).
+preference(shanto, hybrid).
+preference(asma, remote).
+preference(tasnia, onsite).
+preference(emon, onsite).
+preference(arif, remote).
+preference(jui, onsite).
+preference(tonmoy, flexible_hours).
+preference(rahim, remote).
+preference(sadia, remote).
+preference(emon, remote).
+preference(tamim, hybrid).
+preference(mamun, onsite).
+preference(arif, flexible_hours).
+preference(shanto, onsite).
+preference(fahim, hybrid).
+preference(nahid, flexible_hours).
+preference(lamia, hybrid).
+preference(asma, flexible_hours).
+preference(tasnia, remote).
+
+
+% ----------- COMPANY INFORMATION -----------
+company(google, [software, ml], large, mnc).
+company(facebook, [web, design], large, mnc).
+company(amazon, [data, cloud], large, mnc).
+company(turing, [backend, mobile], medium, startup).
+company(canva, [design], medium, product).
+company(randomcorp, [admin, content], small, local).
+company(openai, [ml, ai], medium, research).
+company(github, [devops, backend], medium, tech).
+company(cisco, [security, networking], large, mnc).
+company(unilever, [marketing], large, corporate).
+company(hsbc, [finance], large, corporate).
+company(linkedin, [web, ml], large, mnc).
+company(instagram, [design, frontend], large, product).
+company(tesla, [robotics, ai], large, mnc).
+company(shopup, [commerce, logistics], medium, startup).
+company(grameenphone, [telecom, network], large, corporate).
+company(brac, [social, education], large, ngo).
+company(agora, [retail, commerce], medium, corporate).
+company(pathao, [delivery, mobile], medium, startup).
+company(bkash, [finance, mobile], large, fintech).
+company(rahimsoft, [software, training], small, local).
+company(softbd, [web, ecommerce], medium, tech).
+company(xsolutions, [ml, ai], small, startup).
+company(acehub, [freelancing, support], small, local).
+company(aamra, [cloud, telecom], medium, corporate).
+company(tigerit, [security, software], medium, tech).
+company(brightcoders, [training, education], small, startup).
+company(mediusware, [web, backend], medium, tech).
+company(trustit, [cybersecurity], small, startup).
+company(dream71, [games, software], medium, creative).
+
+
+
+% ---------- COURSES ----------
+% course(Skill, CourseName).
+course(python, 'Python Basics').
+course(ml, 'Intro to Machine Learning').
+course(git, 'Git Version Control').
+course(database, 'SQL for Beginners').
+course(statistics, 'Statistics 101').
+course(photoshop, 'Photoshop Essentials').
+% -----------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+:- dynamic job/8, user/6, preference/2, company/4, course/2.
+
+
+
+% 1. Show all jobs !!
+show_all_jobs :-
+    job(ID, Title, Skills, Exp, Location, Field, Company, Salary),
+    format('~nJob ID: ~w~nTitle: ~w~nSkills Required: ~w~nExperience: ~w years~nLocation: ~w~nField: ~w~nCompany: ~w~nSalary: ~w BDT~n-----------------------------~n',
+           [ID, Title, Skills, Exp, Location, Field, Company, Salary]),
+    fail.
+
+
+% 2. show all courses detail!!
+show_all_course :-
+    course(Skill, Title),
+    write('Course Title: '), write(Title), nl,
+    write('Teaches Skill: '), write(Skill), nl,
+    write('-----------------------------'), nl,
+    fail.
+
+% 3. show all companies detail!!
+show_all_company:-
+    company(Name,Field, Size, Type),
+    write('Name:'),write(Name),nl,
+    write('company size: '), write(Size),nl,
+    write('Type:') , write(Type) ,nl,
+    write('Field:') , write(Field),nl,
+     write('-----------------------------'), nl,
+    fail.
+
+% Skill matching: check if user has all required skills for job
+has_all_skills([], _).
+has_all_skills([H|T], UserSkills) :-
+    member(H, UserSkills),
+    has_all_skills(T, UserSkills).
+
+% --------------------------------
+% Check if user is eligible for a job (skills, experience, location, interest, blacklist)
+eligible(User, JobID) :-
+    user(User, UserSkills, UserExp, UserLoc,_, Blacklist),
+    job(JobID, _, JobSkills, MinExp, JobLoc, _, Company, _),
+    \+ member(Company, Blacklist),
+    UserExp >= MinExp,
+    (UserLoc = JobLoc ; preference(User, remote)),
+    has_all_skills(JobSkills, UserSkills).
+
+
+% Recommend all eligible jobs for a user, returns list of job IDs
+recommend_jobs(User, JobIDs) :-
+    findall(JobID, eligible(User, JobID), JobIDs).
+
+
+% Get job details by JobID (for pretty printing or queries)
+job_details(JobID, Title, Skills, Exp, Loc, Field, Company, Salary) :-
+    job(JobID, Title, Skills, Exp, Loc, Field, Company, Salary).
+
+% --------------------------------
+% Find skill gaps for a user on a particular job (skills user doesn't have)
+skill_gap(User, JobID, MissingSkills) :-
+    user(User, UserSkills, _, _, _, _),
+    job(JobID, _, JobSkills, _, _, _, _, _),
+    findall(Skill, (member(Skill, JobSkills), \+ member(Skill, UserSkills)), MissingSkills).
+
+% --------------------------------
+% Recommend courses for missing skills in a job for a user
+recommend_courses(User, JobID, CourseNames) :-
+    skill_gap(User, JobID, MissingSkills),
+    findall(Course, (member(Skill, MissingSkills), course(Skill, Course)), CourseNames).
+
+% --------------------------------
+% Jobs offered by companies in a certain field or size
+jobs_by_company_field(Field, JobIDs) :-
+    findall(JobID,
+        (job(JobID, _, _, _, _, JobField, Company, _),
+         company(Company, _, _, _),
+         JobField = Field),
+    JobIDs).
+
+jobs_by_company_size(Size, JobIDs) :-
+    findall(JobID,
+        (job(JobID, _, _, _, _, _, Company, _),
+         company(Company, _, Size, _)),
+    JobIDs).
+
+% --------------------------------
+% List companies by type (e.g., startup, mnc, corporate)
+companies_by_type(Type, Companies) :-
+    findall(Company, company(Company, _, _, Type), Companies).
+
+% --------------------------------
+% Check user preference for remote or onsite work
+prefers_remote(User) :-
+    preference(User, remote).
+
+prefers_onsite(User) :-
+    preference(User, onsite).
+
+% --------------------------------
+% Dynamic predicate: Add a new job
+add_job(ID, Title, Skills, Exp, Loc, Field, Company, Salary) :-
+    assertz(job(ID, Title, Skills, Exp, Loc, Field, Company, Salary)),
+    write('job added successfully !!').
+
+% Remove a job by ID or title
+remove_job(ID) :-
+    retract(job(ID, _, _, _, _, _, _, _)).
+
+remove_job_by_title(Title) :-
+    retract(job(_, Title, _, _, _, _, _, _)).
+
+% --------------------------------
+% Job salary info
+job_salary(JobID, Salary) :-
+    job(JobID, _, _, _, _, _, _, Salary).
+
+% --------------------------------
+% Sort jobs by salary descending for a user’s recommendations
+recommend_jobs_sorted_by_salary(User, SortedJobs) :-
+    findall(Salary-JobID,
+        (eligible(User, JobID), job_salary(JobID, Salary)),
+    Pairs),
+    sort(0, @>=, Pairs, SortedPairs), % descending
+    pairs_values(SortedPairs, SortedJobs).
+
+% --------------------------------
+% List users eligible for a particular job
+users_for_job(JobID, Users) :-
+    findall(User, eligible(User, JobID), Users).
+
+% --------------------------------
+% Check if a user blacklists a company
+is_blacklisted(User, Company) :-
+    user(User, _, _, _, _, Blacklist),
+    member(Company, Blacklist).
+
+% --------------------------------
+% Find jobs not matching user's interests
+jobs_not_matching_interest(User, Jobs) :-
+    user(User, _, _, _, Interests, _),
+    findall(JobID,
+        (job(JobID, _, _, _, _, Field, _, _),
+         \+ member(Field, Interests)),
+    Jobs).
+
+% --------------------------------
+% Find jobs not in user's preferred location (and no remote preference)
+jobs_not_in_location(User, Jobs) :-
+    user(User, _, _, Loc, _, _),
+    preference(User, Pref),
+    (Pref \= remote ->
+        findall(JobID,
+            (job(JobID, _, _, _, JobLoc, _, _, _),
+             JobLoc \= Loc),
+        Jobs)
+    ;
+        Jobs = []
+    ).
+
+% --------------------------------
+% User’s top interest field (first in list)
+user_top_interest(User, TopInterest) :-
+    user(User, _, _, _, [TopInterest|_], _).
+
+% --------------------------------
+% Priority jobs: jobs in user’s top interest field
+priority_jobs(User, JobIDs) :-
+    user_top_interest(User, TopInterest),
+    findall(JobID,
+        (eligible(User, JobID),
+         job(JobID, _, _, _, _, TopInterest, _, _)),
+    JobIDs).
+
+% --------------------------------
+% Recommend courses for all missing skills across user's interests
+recommend_courses_for_user(User, AllCourses) :-
+    findall(Course,
+        (user(User, UserSkills, _, _, Interests, _),
+         job(_, _, JobSkills, _, _, Field, _, _),
+         member(Field, Interests),
+         member(Skill, JobSkills),
+         \+ member(Skill, UserSkills),
+         course(Skill, Course)),
+    CoursesDup),
+    sort(CoursesDup, AllCourses).
+
+% --------------------------------
+% Utility: Print job info nicely
+print_job(JobID) :-
+    job(JobID, Title, Skills, Exp, Loc, Field, Company, Salary),
+    format('Job ID: ~w~nTitle: ~w~nSkills: ~w~nMin Exp: ~w~nLocation: ~w~nField: ~w~nCompany: ~w~nSalary: ~w~n~n',
+           [JobID, Title, Skills, Exp, Loc, Field, Company, Salary]).
+
+% --------------------------------
+% Utility: Print list of jobs
+print_jobs([]).
+print_jobs([H|T]) :-
+    print_job(H),
+    print_jobs(T).
+
+% --------------------------------
+% Sample query to print recommendations for a user
+print_recommendations(User) :-
+    recommend_jobs(User, JobIDs),
+    (JobIDs = [] ->
+        format('No matching jobs found for ~w.~n', [User])
+    ;
+        format('Recommended jobs for ~w:~n', [User]),
+        print_jobs(JobIDs)
+    ).
