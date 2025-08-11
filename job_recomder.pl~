@@ -1,12 +1,14 @@
-% ---------- USERS ----------
+
+% USERS ----------
+
 % user(Name, [Skills], Experience, PreferredLocation, [InterestFields], [BlacklistedCompanies]).
 user(mamun, [python, java, git], 3, dhaka, [software, ml], []).
 user(sadia, [html, css, javascript], 1, chittagong, [web, design], [facebook]).
 user(rahim, [nodejs, database, git], 2, rajshahi, [backend], []).
 user(tamim, [python, excel, statistics], 1, dhaka, [data, finance], []).
 user(nahid, [python, flask, git], 2, dhaka, [web, ml], [linkedin]).
-user(jui, [html, css, react,django,angular], 1, sylhet, [frontend, design,web], [instagram]).
-user(tonmoy, [java, spring, database], 3, rajshahi, [software, backend], []).
+user(jui,   [html, css, react,django,angular], 1, sylhet, [frontend, design,web], [instagram]).
+user(tonmoy,[java, spring, database], 3, rajshahi, [software, backend], []).
 user(fahim, [python, keras, pandas], 2, chittagong, [ml, ai], []).
 user(lamia, [excel, accounting, finance], 4, dhaka, [finance, data], [facebook]).
 user(shanto, [javascript, nodejs, mongodb], 2, khulna, [web, backend], [github]).
@@ -17,7 +19,7 @@ user(arif, [python, opencv, ml], 2, rajshahi, [vision, robotics], [linkedin]).
 
 
 
-% ---------- JOBS ----------
+% JOBS ---------------
 
 % job(ID, Title, [RequiredSkills], MinExperience, Location, Field, Company, Salary).
 job(1, 'Software Engineer', [python, java, git], 2, dhaka, software, google, 60000).
@@ -58,7 +60,8 @@ job(35, 'Support Engineer', [communication, hardware], 1, dhaka, support, samsun
 job(36, 'Junior Web Developer', [html, css], 0, sylhet, web, startuphub, 25000).
 job(37, 'AI Engineer', [python, pytorch, ml], 2, rajshahi, ml, openai, 70000).
 
-% ----------- USER JOB PREFERENCES -----------
+
+% USER JOB PREFERENCES -----------
 preference(mamun, remote).
 preference(mamun, flexible_hours).
 preference(sadia, hybrid).
@@ -91,7 +94,7 @@ preference(asma, flexible_hours).
 preference(tasnia, remote).
 
 
-% ----------- COMPANY INFORMATION -----------
+% COMPANY INFORMATION -----------
 company(google, [software, ml], large, mnc).
 company(facebook, [web, design], large, mnc).
 company(amazon, [data, cloud], large, mnc).
@@ -125,7 +128,7 @@ company(dream71, [games, software], medium, creative).
 
 
 
-% ---------- COURSES ----------
+% COURSES-----------------
 % course(Skill, CourseName).
 course(python, 'Python Basics').
 course(ml, 'Intro to Machine Learning').
@@ -133,22 +136,30 @@ course(git, 'Git Version Control').
 course(database, 'SQL for Beginners').
 course(statistics, 'Statistics 101').
 course(photoshop, 'Photoshop Essentials').
-% -----------------------------------------------------------------------
-% ------------------------------------------------------------------------
+
+:- dynamic job/8, user/6, preference/2, company/4, course/2.
 
 
 
+%####################################
+% SHOW ALL JOBS , COMPANYS , COURSES|
+% ###################################
 
-
-% 1. Show all jobs !!
 show_all_jobs :-
     job(ID, Title, Skills, Exp, Location, Field, Company, Salary),
-    format('~nJob ID: ~w~nTitle: ~w~nSkills Required: ~w~nExperience: ~w years~nLocation: ~w~nField: ~w~nCompany: ~w~nSalary: ~w BDT~n-----------------------------~n',
-           [ID, Title, Skills, Exp, Location, Field, Company, Salary]),
+    write('Job ID: '), write(ID), nl,
+    write('Title: '), write(Title), nl,
+    write('Skills Required: '), write(Skills), nl,
+    write('Experience: '), write(Exp), write(' years'), nl,
+    write('Location: '), write(Location), nl,
+    write('Field: '), write(Field), nl,
+    write('Company: '), write(Company), nl,
+    write('Salary: '), write(Salary), write(' BDT'), nl,
+    write('-----------------------------'), nl,
     fail.
 
 
-% 2. show all courses detail!!
+
 show_all_course :-
     course(Skill, Title),
     write('Course Title: '), write(Title), nl,
@@ -156,7 +167,6 @@ show_all_course :-
     write('-----------------------------'), nl,
     fail.
 
-% 3. show all companies detail!!
 show_all_company:-
     company(Name,Field, Size, Type),
     write('Name:'),write(Name),nl,
@@ -166,14 +176,55 @@ show_all_company:-
      write('-----------------------------'), nl,
     fail.
 
-% Skill matching: check if user has all required skills for job
+
+
+
+%#############
+% ADMIN PART |
+% ############
+
+add_job(ID, Title, Skills, Exp, Loc, Field, Company, Salary) :-
+    assertz(job(ID, Title, Skills, Exp, Loc, Field, Company, Salary)),
+    write('job added successfully !!').
+
+remove_job(ID) :-
+    retract(job(ID, _, _, _, _, _, _, _)).
+
+remove_job_by_title(Title) :-
+    retract(job(_, Title, _, _, _, _, _, _)).
+
+
+
+add_company(Name, Field, Size, Type) :-
+    assertz(company(Name,Field,Size,Type)),
+    write('Company added successfully!').
+remove_company(Name):-
+    retract(company(Name,_ , _ ,_)).
+
+
+add_user(Name, Skills, Experience, PreferredLocation, InterestFields, BlacklistedCompanies) :-
+    \+ user(Name, _, _, _, _, _),  % Check user doesn't already exist
+    assertz(user(Name, Skills, Experience, PreferredLocation, InterestFields, BlacklistedCompanies)),
+    write('User added successfully.'), nl.
+
+add_user(Name, _, _, _, _, _) :-
+    user(Name, _, _, _, _, _),
+    write('Error: User already exists.'), nl, fail.
+
+
+
+
+%#################
+% USER FUNCTIONS |
+% ################
+
 has_all_skills([], _).
 has_all_skills([H|T], UserSkills) :-
     member(H, UserSkills),
     has_all_skills(T, UserSkills).
 
-% --------------------------------
-% Check if user is eligible for a job (skills, experience, location, interest, blacklist)
+
+
 eligible(User, JobID) :-
     user(User, UserSkills, UserExp, UserLoc,_, Blacklist),
     job(JobID, _, JobSkills, MinExp, JobLoc, _, Company, _),
@@ -183,7 +234,6 @@ eligible(User, JobID) :-
     has_all_skills(JobSkills, UserSkills).
 
 
-% Recommend all eligible jobs for a user, returns list of job IDs
 recommend_jobs(User, JobIDs) :-
     findall(JobID, eligible(User, JobID), JobIDs).
 
@@ -232,20 +282,6 @@ prefers_remote(User) :-
 
 prefers_onsite(User) :-
     preference(User, onsite).
-
-% --------------------------------
-% Dynamic predicate: Add a new job
-add_job(ID, Title, Skills, Exp, Loc, Field, Company, Salary) :-
-    assertz(job(ID, Title, Skills, Exp, Loc, Field, Company, Salary)),
-    write('job added successfully !!').
-
-% Remove a job by ID or title
-remove_job(ID) :-
-    retract(job(ID, _, _, _, _, _, _, _)).
-
-remove_job_by_title(Title) :-
-    retract(job(_, Title, _, _, _, _, _, _)).
-
 % --------------------------------
 % Job salary info
 job_salary(JobID, Salary) :-
