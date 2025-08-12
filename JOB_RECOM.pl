@@ -9,7 +9,7 @@ user(u6, mou, [html, css, react, django, angular,javascript], 7, sylhet, [fronte
 user(u7, raiyan, [java, spring, database], 3, rajshahi, [software, backend], []).
 user(u8, anik, [python, keras, pandas], 2, chittagong, [ml, ai], []).
 user(u9, riya, [excel, accounting, finance], 4, dhaka, [finance, data], [facebook]).
-user(u10, sarwar, [javascript, nodejs, mongodb], 2, khulna, [web, backend], [github]).
+user(u10, sarwar, [javascript, nodejs, html ,css], 2, khulna, [web, backend], [github]).
 user(u11, asmaul, [python, tableau, statistics], 3, barisal, [data, analytics], []).
 user(u12, tasmia, [java, html, css], 1, dhaka, [web, design], []).
 user(u13, emonul, [c, 'c++', problem_solving], 1, dhaka, [cp, software], []).
@@ -44,7 +44,7 @@ job(7, 'Data Entry Intern', [typing], 0, dhaka, admin, alphadata, 15000).
 job(8, 'Frontend Developer', [html, css, react], 1, sylhet, web, webverse, 42000).
 job(9, 'Software Developer', [java,git,python, database], 2, rajshahi, software, technova, 60000).
 job(10, 'AI Researcher', [python, tensorflow, ml], 2, dhaka, ml, mindspark, 75000).
-job(11, 'Data Scientist', [python,ml,git, pandas, statistics], 2, dhaka, data, datacore, 65000).
+job(11, 'Data Scientist', [python], 2, dhaka, data, datacore, 65000).
 job(12, 'Product Manager', [communication, management, roadmap], 4, chittagong, management, nexgen, 80000).
 job(13, 'DevOps Engineer', [docker, kubernetes, git], 3, khulna, devops, cloudsmith, 70000).
 job(14, 'UX Designer', [figma, design_thinking, creativity], 2, sylhet, design, pixelworks, 48000).
@@ -102,36 +102,41 @@ company(infrahub, [construction, project], large, corporate).
 
 % ===================== COURSES =====================
 % course(Skill, CourseName).
-course(python, 'Python Basics').
-course(java, 'Java Fundamentals').
-course(git, 'Version Control with Git').
-course(html, 'HTML for Beginners').
-course(css, 'CSS Essentials').
-course(javascript, 'JavaScript Fundamentals').
-course(statistics, 'Statistics 101').
-course(ml, 'Introduction to Machine Learning').
-course(database, 'SQL for Beginners').
-course(react, 'React Frontend Development').
-course(django, 'Django Web Framework').
-course(spring, 'Spring Boot Essentials').
-course(pandas, 'Data Analysis with Pandas').
-course(tensorflow, 'TensorFlow for AI').
-course(kubernetes, 'Kubernetes Fundamentals').
-course(docker, 'Docker for DevOps').
-course(figma, 'UI/UX Design with Figma').
-course(aws, 'AWS Cloud Practitioner').
-course(security, 'Cybersecurity Basics').
-course(seo, 'Search Engine Optimization').
-course(flutter, 'Flutter Mobile Development').
-course(pytorch, 'Deep Learning with PyTorch').
-course(opencv, 'Computer Vision with OpenCV').
-course(unity, 'Game Development in Unity').
-course(arduino, 'Arduino Programming').
-course(linux, 'Linux Essentials').
-course(premiere_pro, 'Adobe Premiere Pro Editing').
-course(finance, 'Corporate Finance Fundamentals').
-course(hr, 'Human Resource Management Basics').
-course(electronics, 'Electronics for Engineers').
+course(python, "Python for Beginners").
+course(java, "Java Programming Masterclass").
+course(git, "Version Control with Git").
+course(ml, "Introduction to Machine Learning").
+course(database, "Database Management Systems").
+course(pandas, "Data Analysis with Pandas").
+course(statistics, "Statistics 101").
+course(html, "HTML Fundamentals").
+course(css, "CSS for Beginners").
+course(javascript, "JavaScript Essentials").
+course(react, "React - The Complete Guide").
+course(nodejs, "Node.js Fundamentals").
+course(mongodb, "MongoDB Basics").
+course(data_analysis, "Data Analysis with Python").
+course(machine_learning, "Hands-on Machine Learning").
+course(deep_learning, "Deep Learning Specialization").
+course(nlp, "Natural Language Processing").
+course(tensorflow, "TensorFlow for Deep Learning").
+course(figma, "Figma UI/UX Design").
+course(design_thinking, "Design Thinking Workshop").
+course(creativity, "Creative Thinking and Innovation").
+course(networking, "Computer Networking Fundamentals").
+course(security, "Cybersecurity Essentials").
+course(linux, "Linux Administration Basics").
+course(problem_solving, "Problem-Solving Skills").
+course(communication, "Effective Communication Skills").
+course(management, "Project Management Fundamentals").
+course(roadmap, "Career Roadmap Planning").
+course(hardware, "Computer Hardware Basics").
+
+
+
+
+
+
 
 % preferance-------------
 preference(u1, remote).
@@ -421,6 +426,10 @@ show_all_company :-
     write('Field: '), write(Field), nl,
     write('-----------------------------'), nl,
     fail.
+count_all_jobs(Count) :-
+    findall(JobID, job(JobID, _, _, _, _, _, _, _), JobList),
+    sort(JobList, UniqueJobIDs),
+    length(UniqueJobIDs, Count).
 
 
 
@@ -458,6 +467,11 @@ add_user(Id,_, _, _, _, _, _) :-
     write('Error: User already exists.'), nl, fail.
 
 
+count_eligible_jobs(Uid, Count) :-
+    findall(JobID, eligible(Uid, JobID), JobList),
+    sort(JobList, UniqueJobIDs),
+    length(UniqueJobIDs, Count).
+
 
 %#################
 % USER FUNCTIONS |
@@ -474,6 +488,7 @@ eligible(Uid, JobID) :-
     \+ member(Company, Blacklist),
     UserExp >= MinExp,
     has_all_skills(JobSkills, UserSkills).
+
 
 recommend_jobs(Uid, UniqueJobIDs) :-
     findall(JobID, eligible(Uid, JobID), JobList),
@@ -505,4 +520,62 @@ company_details(Name) :-
 
 
 
+%!  %%%%%%%%%%%%%%%%%%
+%   COURSE SUGGESTION|
+%!  %%%%%%%%%%%%%%%%%%
 
+missing_skill(Uid, JobID, Skill) :-
+    user(Uid, _Name, UserSkills, _Exp, _Loc, _IF, _Blacklist),
+    job(JobID, _Title, JobSkills, _MinExp, _JLoc, _Field, _Company, _Salary),
+    member(Skill, JobSkills),
+    \+ member(Skill, UserSkills).
+
+missing_skills_list(Uid, JobID, MissingSkills) :-
+    findall(Skill, missing_skill(Uid, JobID, Skill), L),
+    sort(L, MissingSkills).
+
+suggest_courses_for_job_list(Uid, JobID, Pairs) :-
+    missing_skills_list(Uid, JobID, MissingSkills),
+    findall((Skill, Course),
+            (   member(Skill, MissingSkills),
+                ( course(Skill, Course) -> true ; Course = 'No course found' )
+            ),
+            Pairs).
+
+suggest_courses_for_job(Uid, JobID) :-
+    suggest_courses_for_job_list(Uid, JobID, Pairs),
+    ( Pairs == [] ->
+        format('User ~w has no missing skills for job ~w.~n', [Uid, JobID])
+    ;
+        format('Suggested courses for user ~w to qualify for job ~w:~n', [Uid, JobID]),
+        forall(member((Skill, Course), Pairs),
+               ( Course = 'No course found'
+               -> format('  - Skill "~w": No course found.~n', [Skill])
+               ; format('  - Skill "~w": ~w~n', [Skill, Course])
+               ))
+    ).
+
+
+%!  %%%%%%%%%%%%
+%   FOR COMPANY
+%   %%%%%%%%%%%%
+
+% check how many candidate availabe for their job . (job_11)
+
+count_candidates_for_job(JobID, Count) :-
+    findall(UserID,
+        (
+            user(UserID, _, UserSkills, UserExp, _, _, Blacklist),
+            job(JobID, _, JobSkills, MinExp, _, _, Company, _),
+            \+ member(Company, Blacklist),
+            UserExp >= MinExp,
+            has_all_skills(JobSkills, UserSkills)
+        ),
+        CandidateList),
+    sort(CandidateList, UniqueCandidates),
+    length(UniqueCandidates, Count).
+
+
+count_remote_perf(Count) :-
+    findall(UserID, preference(UserID, remote), UserList),
+    length(UserList, Count).
