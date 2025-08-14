@@ -562,20 +562,38 @@ suggest_courses_for_job(Uid, JobID) :-
 
 % check how many candidate availabe for their job . (job_11)
 
-count_candidates_for_job(JobID, Count) :-
-    findall(UserID,
-        (
-            user(UserID, _, UserSkills, UserExp, _, _, Blacklist),
-            job(JobID, _, JobSkills, MinExp, _, _, Company, _),
-            \+ member(Company, Blacklist),
-            UserExp >= MinExp,
-            has_all_skills(JobSkills, UserSkills)
-        ),
-        CandidateList),
-    sort(CandidateList, UniqueCandidates),
-    length(UniqueCandidates, Count).
+
+count_remote_list([], 0).
+
+count_remote_list([H|T], Count) :-
+    count_remote_list(T, RestCount),
+    ( preference(H, remote) ->
+        Count is RestCount + 1
+    ;
+        Count is RestCount
+    ).
+count_remote_users(Count) :-
+    findall(UserID, preference(UserID, _), UserList),
+    sort(UserList, UniqueUsers), % avoid duplicates if any
+    count_remote_list(UniqueUsers, Count).
 
 
-count_remote_perf(Count) :-
-    findall(UserID, preference(UserID, remote), UserList),
-    length(UserList, Count).
+count_candidates(JobID, Count) :-
+    findall(UserID, user(UserID, _, _, _, _, _, _), UserIDs),
+    job(JobID, _, JobSkills, MinExp, _, _, Company, _),
+    count_candidates_list(UserIDs, JobSkills, MinExp, Company, Count).
+
+count_candidates_list([], _, _, _, 0).
+
+count_candidates_list([H|T], JobSkills, MinExp, Company, Count) :-
+    user(H, _, UserSkills, UserExp, _, _, Blacklist),
+    count_candidates_list(T, JobSkills, MinExp, Company, RestCount),
+    (
+        \+ member(Company, Blacklist),
+        UserExp >= MinExp,
+        has_all_skills(JobSkills, UserSkills)
+    ->
+        Count is RestCount + 1
+    ;
+        Count is RestCount
+    ).
