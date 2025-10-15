@@ -1,0 +1,112 @@
+% ---------- Designations ----------
+role(mr_rahman, ceo).
+role(anwar, chairman).
+role(imran, head_engineering).
+role(kamran, head_product).
+role(farzana, head_hr).
+role(nisha, board_intern).
+role(tanvir, board_intern).
+role(ayaan, junior_developer).
+role(rida, product_analyst).
+role(sara, research_assistant).
+
+% ---------- Supervisory and mentorship links ----------
+supervises(mr_rahman, imran).
+supervises(mr_rahman, kamran).
+supervises(mr_rahman, farzana).
+supervises(anwar, mr_rahman).
+
+manages(imran, ayaan).
+manages(kamran, rida).
+
+mentors(anwar, nisha).
+mentors(anwar, tanvir).
+mentors(tanvir, sara).
+
+% ---------- Family link ----------
+brother(anwar, mr_rahman).
+
+% ---------- Authority relations ----------
+boss(X, Y) :- supervises(X, Y).
+boss(X, Y) :- manages(X, Y).
+boss(X, Y) :- mentors(X, Y).
+
+% ---------- Recursive seniority ----------
+senior(X, Y) :- boss(X, Y).
+senior(X, Y) :- boss(X, Z), senior(Z, Y).
+
+% ---------- Colleague (same supervisor) ----------
+colleague(X, Y) :-
+    supervises(S, X),
+    supervises(S, Y),
+    X \= Y.
+
+% ---------- Connection through hierarchy or mentorship ----------
+connected(X, Y) :- boss(X, Y).
+connected(X, Y) :- boss(Y, X).
+connected(X, Y) :- boss(X, Z), connected(Z, Y).
+connected(X, Y) :- boss(Y, Z), connected(Z, X).
+
+% ---------- Team list using findall ----------
+team_list(X, List) :-
+    findall(Y, supervises(X, Y), List).
+%----------------------------------------------------------------
+%
+%\
+%\
+relation_one(X, Y) :-
+    role(X, 'ceo'),
+    role(Y, 'board_intern'),
+    brother(B, X),
+    mentors(B, Y),
+    format('~w is the CEO of the company.~n', [X]),
+    format('~w is a board intern mentored by ~w, who is the brother of the CEO.~n', [Y, B]).
+
+
+relation_two(X, Y, Z) :-
+    colleague(X, Y),
+    role(Z, 'chairman'),
+    supervises(Z, S),
+    supervises(S, X),
+    supervises(S, Y),
+    format('~w and ~w are colleagues under ~w.~n', [X, Y, S]),
+    format('~w is the Chairman who supervises ~w.~n', [Z, S]).
+
+
+relation_three_people(X, Y, Z) :-
+    colleague(X, Y),
+    supervises(S, X),
+    supervises(S, Y),
+    brother(F, S),
+    mentors(F, Z),
+    format('~w and ~w are colleagues under ~w.~n', [X, Y, S]),
+    format('~w is mentored by ~w, who is the brother of their boss (~w).~n', [Z, F, S]).
+
+
+relation_four(X, Y, Z) :-
+    manages(R, X),
+    manages(S, Y),
+    colleague(R, S),
+    supervises(Boss, R),
+    role(Boss, 'ceo'),
+    brother(Chair, Boss),
+    mentors(Chair, Z),
+    format('~w and ~w work under ~w and ~w, who are colleagues under ~w (CEO).~n', [X, Y, R, S, Boss]),
+    format('~w is mentored by ~w, who is the brother of their CEO (~w).~n', [Z, Chair, Boss]).
+
+
+
+relation_five(A, B, C, D) :-
+    manages(I, A),
+    manages(K, B),
+    colleague(I, K),
+    supervises(mr_rahman, I),
+    brother(An, mr_rahman),
+    mentors(An, C),
+    mentors(C, D),
+    format('~w and ~w are team members under ~w and ~w, who report to mr_rahman (CEO).~n', [A, B, I, K]),
+    format('~w is mentored by ~w, who is the Chairman, and ~w mentors ~w.~n', [C, An, C, D]).
+
+relation_six(X, Y) :-
+    mentors(Y, X),
+    format('~w is mentored by ~w.~n', [X, Y]).
