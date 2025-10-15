@@ -1,55 +1,106 @@
 
-parents(aziz, sazib).
-parents(aziz, razib).
-parents(nilu, mukti).
-parents(sazib, rafsan).
-parents(sazib, rasib).
-parents(razib, humayra).
-parents(mukti, abiha).
-parents(x,aziz).
-parents(x,nilu).
-
+% ---------- Family facts ----------
 male(aziz).
 male(sazib).
 male(razib).
-male(rasib).
 male(rafsan).
+male(rasib).
 
 female(nilu).
 female(mukti).
 female(humayra).
 female(abiha).
 
-grandparent(G,C):-
-    parents(G,P),parents(P,C).
+% ---------- Parent-child relations ----------
+parent(aziz, sazib).
+parent(aziz, razib).
 
-sibling(X,Y):-
-    parents(P,X),
-    parents(P,Y),
+parent(nilu, mukti).
+
+parent(sazib, rafsan).
+parent(sazib, rasib).
+parent(razib, humayra).
+parent(mukti, abiha).
+
+% ---------- Sibling relation ----------
+sibling(sazib, razib).
+sibling(razib, sazib).
+
+sibling(aziz, nilu).
+sibling(nilu, aziz).
+
+% ---------- Rules ----------
+
+% Father rule
+father(X, Y) :- parent(X, Y), male(X).
+
+% Mother rule
+mother(X, Y) :- parent(X, Y), female(X).
+
+% Brother rule
+brother(X, Y) :-
+    parent(P, X), parent(P, Y),
+    male(X), X \= Y.
+
+% Sister rule
+sister(X, Y) :-
+    parent(P, X), parent(P, Y),
+    female(X), X \= Y.
+
+% Grandparent rule
+grandparent(X, Y) :-
+    parent(X, Z),
+    parent(Z, Y).
+
+% Grandfather rule
+grandfather(X, Y) :-
+    grandparent(X, Y),
+    male(X).
+
+% Cousin rule
+cousin(X, Y) :-
+    parent(P1, X),
+    parent(P2, Y),
+    sibling(P1, P2),
     X \= Y.
 
-brother(X,Y):-
-    sibling(X,Y), male(X).
 
-sister(S,C):-
-    sibling(S,C), female(S).
+relation_one(X, Y) :-
+    sibling(X, A),
+    parent(A, Y),
+    format('~w is the uncle of ~w.~n', [X, Y]).
 
-uncle(U,C):-
-    brother(U,P),
-    parents(P,C).
-
-aunt(A,P):-
-    sister(A,X), parents(X,P).
-
-cousin(X,Y):-
-    parents(P,X),
-    parents(Q,Y),
-    sibling(P,Q),
-    X \= Y.
+relation_two(X, Y, Z) :-
+    sibling(X, Y),
+    sibling(Z, A),
+    parent(A, M),
+    parent(M, X),
+    format('~w and ~w are brothers, and ~w is their aunt.~n', [X, Y, Z]).
 
 relation_three(X, Y, Z) :-
-    brother(X, Y),parents(P,X),
-    cousin(P,Z),
-    write(X), write(' and '), write(Y),
-    write(' are brothers, and '),
-    write(Z), write(' is their aunt.'), nl.
+    sibling(X, Y),
+    cousin(Z, X),
+    format('~w and ~w are brothers, and ~w is their cousin.~n', [X, Y, Z]).
+
+
+relation_four(X, Y, Z) :-
+    sibling(X, Y),
+    cousin(Z, X),
+    format('~w and ~w are brothers, and ~w is their cousin (from their father’s cousin’s side).~n', [X, Y, Z]).
+
+
+relation_five(A, B, C, D) :-
+    sibling(A, B),
+    cousin(C, A),
+    cousin(D, A),
+    format('~w and ~w are brothers; ~w and ~w are their cousins.~n', [A, B, C, D]).
+
+relation_six(X, Y) :-
+    parent(F, X),
+    sibling(F, Y),
+    female(X),
+    format('~w is the niece of ~w.~n', [X, Y]).
+
+
+children(Parent, List) :-
+    findall(Child, parent(Parent, Child), List).
