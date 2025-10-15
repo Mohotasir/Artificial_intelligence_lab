@@ -1,0 +1,55 @@
+
+parents(aziz, sazib).
+parents(aziz, razib).
+parents(nilu, mukti).
+parents(sazib, rafsan).
+parents(sazib, rasib).
+parents(razib, humayra).
+parents(mukti, abiha).
+parents(x,aziz).
+parents(x,nilu).
+
+male(aziz).
+male(sazib).
+male(razib).
+male(rasib).
+male(rafsan).
+
+female(nilu).
+female(mukti).
+female(humayra).
+female(abiha).
+
+grandparent(G,C):-
+    parents(G,P),parents(P,C).
+
+sibling(X,Y):-
+    parents(P,X),
+    parents(P,Y),
+    X \= Y.
+
+brother(X,Y):-
+    sibling(X,Y), male(X).
+
+sister(S,C):-
+    sibling(S,C), female(S).
+
+uncle(U,C):-
+    brother(U,P),
+    parents(P,C).
+
+aunt(A,P):-
+    sister(A,X), parents(X,P).
+
+cousin(X,Y):-
+    parents(P,X),
+    parents(Q,Y),
+    sibling(P,Q),
+    X \= Y.
+
+relation_three(X, Y, Z) :-
+    brother(X, Y),parents(P,X),
+    cousin(P,Z),
+    write(X), write(' and '), write(Y),
+    write(' are brothers, and '),
+    write(Z), write(' is their cousin.'), nl.
